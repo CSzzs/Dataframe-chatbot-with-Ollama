@@ -42,3 +42,14 @@ for message in st.session_state.chat_history:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
+# input fileld for user inputs
+user_prompt = st.chat_input("Ask LLM....")
+
+if user_prompt:
+    #add user's message to chat history and dispalying it 
+    st.chat_message("user").markdown(user_prompt)
+    st.session_state.chat_history.append({"role":"user",
+                                          "content":user_prompt})
+    
+    # Loading the LLM
+    llm = ChatOllama(model="gemma:1b", temperature=0)
