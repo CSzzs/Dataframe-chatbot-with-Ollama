@@ -52,7 +52,7 @@ if user_prompt:
                                           "content":user_prompt})
     
     # Loading the LLM
-    llm = ChatOllama(model="gemma:1b", temperature=0)
+    llm = ChatOllama(model="gemma3:1b", temperature=0)
 
     pandas_df_agent = create_pandas_dataframe_agent(
         llm,
