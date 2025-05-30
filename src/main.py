@@ -53,3 +53,26 @@ if user_prompt:
     
     # Loading the LLM
     llm = ChatOllama(model="gemma:1b", temperature=0)
+
+    pandas_df_agent = create_pandas_dataframe_agent(
+        llm,
+        st.session_state.df,
+        vebose=True,
+        agent_type = AgentType.OPENAI_FUNCTIONS,
+        allow_dangerous_code=True 
+    )
+
+    messages = [
+        {"rol": "system", "content": "you are a helpful assitant"},
+        *st.session_state.chat_history
+    ]
+
+    response = pandas_df_agent.invoke(user_prompt)
+
+    assitant_response = response["output"]
+
+    st.session_state.chat_history.append({"role":"assitant","content": assitant_response})
+
+    # display llm response
+    with st.chat_message("assitant"):
+        st.markdown(assitant_response)
